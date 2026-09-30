@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+package booking.v1;
+
+option java_multiple_files = true;
+option java_package = "dev.nikita.booking.proto";
+option java_outer_classname = "BookingProto";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+service BookingApi {
+  rpc ListResources(google.protobuf.Empty) returns (ListResourcesResponse);
+  rpc GetResource(GetResourceRequest) returns (Resource);
+  rpc GetAvailability(GetAvailabilityRequest) returns (Availability);
+  rpc CreateBooking(CreateBookingRequest) returns (CreateBookingResponse);
+  rpc GetBooking(GetBookingRequest) returns (Booking);
+  rpc CancelBooking(CancelBookingRequest) returns (Booking);
+}
+
+message Resource {
+  string id = 1;
+  string name = 2;
+  string kind = 3;
+}
+
+message ListResourcesResponse {
+  repeated Resource resources = 1;
+}
+
+message GetResourceRequest {
+  string id = 1;
+}
+
+message GetAvailabilityRequest {
+  string resource_id = 1;
+  google.protobuf.Timestamp from = 2;
+  google.protobuf.Timestamp to = 3;
+}
+
+message TimeWindow {
+  google.protobuf.Timestamp starts_at = 1;
+  google.protobuf.Timestamp ends_at = 2;
+}
+
+message Availability {
+  string resource_id = 1;
+  google.protobuf.Timestamp from = 2;
+  google.protobuf.Timestamp to = 3;
+  repeated TimeWindow free = 4;
+}
+
+message CreateBookingRequest {
+  string resource_id = 1;
+  string booked_by = 2;
+  google.protobuf.Timestamp starts_at = 3;
+  google.protobuf.Timestamp ends_at = 4;
+}
+
+message CreateBookingResponse {
+  Booking booking = 1;
+  bool replayed = 2;
+}
+
+message GetBookingRequest {
+  string id = 1;
+}
+
+message CancelBookingRequest {
+  string id = 1;
+}
+
+enum BookingStatus {
+  BOOKING_STATUS_UNSPECIFIED = 0;
+  ACTIVE = 1;
+  CANCELLED = 2;
+}
+
+message Booking {
+  string id = 1;
+  string resource_id = 2;
+  string booked_by = 3;
+  google.protobuf.Timestamp starts_at = 4;
+  google.protobuf.Timestamp ends_at = 5;
+  BookingStatus status = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp cancelled_at = 8;
+}

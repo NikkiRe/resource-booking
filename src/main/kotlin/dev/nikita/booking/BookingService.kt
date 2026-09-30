@@ -2,6 +2,7 @@ package dev.nikita.booking
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import jakarta.validation.Validator
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -19,7 +20,8 @@ class BookingService(
     private val bookings: BookingRepository,
     private val resources: ResourceRepository,
     private val objectMapper: ObjectMapper,
-    private val clock: Clock
+    private val clock: Clock,
+    private val validator: Validator
 ) {
     fun get(id: UUID): Booking = bookings.find(id) ?: notFound("Booking")
 
@@ -28,7 +30,12 @@ class BookingService(
         if (!key.matches(Regex("[A-Za-z0-9._:-]{1,128}"))) {
             invalidRequest("Idempotency-Key must contain 1 to 128 letters, digits, dots, underscores, colons or hyphens")
         }
+        val violations = validator.validate(request)
+        if (violations.isNotEmpty()) {
+            invalidRequest(violations.map { "${it.propertyPath}: ${it.message}" }.sorted().joinToString("; "))
+        }
         val command = request.copy(bookedBy = request.bookedBy.trim())
+        if (command.bookedBy.isBlank()) invalidRequest("bookedBy must contain a name")
         val hash = HexFormat.of().formatHex(
             MessageDigest.getInstance("SHA-256").digest(objectMapper.writeValueAsBytes(command))
         )
@@ -42,8 +49,7 @@ class BookingService(
 
         validateWindow(command.startsAt, command.endsAt, Duration.ofHours(24))
         if (!command.startsAt.isAfter(clock.instant())) invalidRequest("Booking must start in the future")
-        if (command.bookedBy.isBlank() || command.bookedBy.length > 100) invalidRequest("bookedBy must contain 1 to 100 characters")
-        resources.find(command.resourceId) ?: notFound("Resource")
+        resources.lock(command.resourceId) ?: notFound("Resource")
 
         val booking = try {
             bookings.insert(Booking(

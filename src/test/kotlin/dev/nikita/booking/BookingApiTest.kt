@@ -33,7 +33,7 @@ import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 @Testcontainers
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = ["grpc.port=0"])
 @Import(BookingApiTest.TestClock::class)
 class BookingApiTest {
     @Autowired lateinit var http: TestRestTemplate
@@ -209,6 +209,7 @@ class BookingApiTest {
         assertThat(create("missing", request() - "endsAt").statusCode.value()).isEqualTo(400)
         assertThat(create("unknown", request() + ("unexpected" to true)).statusCode.value()).isEqualTo(400)
         assertThat(create("blank", request(bookedBy = "  ")).statusCode.value()).isEqualTo(400)
+        assertThat(create("unicode-blank", request(bookedBy = "\u00a0")).statusCode.value()).isEqualTo(400)
         assertThat(create("long", request(bookedBy = "x".repeat(101))).statusCode.value()).isEqualTo(400)
     }
 

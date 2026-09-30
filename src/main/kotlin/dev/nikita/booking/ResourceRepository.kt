@@ -16,4 +16,8 @@ class ResourceRepository(private val jdbc: NamedParameterJdbcTemplate) {
     fun find(id: UUID): Resource? = jdbc.query(
         "SELECT * FROM resources WHERE id = :id", mapOf("id" to id), mapper
     ).firstOrNull()
+
+    fun lock(id: UUID): Resource? = jdbc.query(
+        "SELECT * FROM resources WHERE id = :id FOR UPDATE", mapOf("id" to id), mapper
+    ).firstOrNull()
 }
