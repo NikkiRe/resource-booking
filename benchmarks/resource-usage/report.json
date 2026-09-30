@@ -1,0 +1,342 @@
+{
+  "status": "passed",
+  "started_at_utc": "2026-10-08T22:21:49Z",
+  "config": {
+    "image": "postgres:17-alpine",
+    "seconds": 30,
+    "warmup_seconds": 8,
+    "clients": 16,
+    "threads": 4,
+    "container_name": "booking-benchmark-37852951875-1",
+    "run_id": "37852951875-1"
+  },
+  "method": {
+    "scope": "31-day daily usage SQL for one resource, freshness query and HTTP excluded",
+    "percentile": "nearest-rank over all per-transaction microsecond logs",
+    "order": [
+      "raw",
+      "view",
+      "view",
+      "raw"
+    ],
+    "query_mode": "prepared",
+    "seed_policy": "same random seed within each raw/view pair",
+    "refresh_during_load": false,
+    "writes_during_load": false,
+    "container_cpus": 2,
+    "container_memory_bytes": 3221225472
+  },
+  "runs": [
+    {
+      "transactions": 30713,
+      "failures": 0,
+      "p50_ms": 8.316,
+      "p95_ms": 61.209,
+      "tps_excluding_initial_connections": 1023.355789,
+      "log_files": [
+        "1-raw.460",
+        "1-raw.460.1",
+        "1-raw.460.2",
+        "1-raw.460.3"
+      ],
+      "number": 1,
+      "variant": "raw",
+      "random_seed": 70681,
+      "seconds": 30
+    },
+    {
+      "transactions": 89428,
+      "failures": 0,
+      "p50_ms": 2.423,
+      "p95_ms": 49.887,
+      "tps_excluding_initial_connections": 2981.145492,
+      "log_files": [
+        "2-view.514",
+        "2-view.514.1",
+        "2-view.514.2",
+        "2-view.514.3"
+      ],
+      "number": 2,
+      "variant": "view",
+      "random_seed": 70681,
+      "seconds": 30
+    },
+    {
+      "transactions": 90363,
+      "failures": 0,
+      "p50_ms": 2.421,
+      "p95_ms": 49.601,
+      "tps_excluding_initial_connections": 3012.798568,
+      "log_files": [
+        "3-view.568",
+        "3-view.568.1",
+        "3-view.568.2",
+        "3-view.568.3"
+      ],
+      "number": 3,
+      "variant": "view",
+      "random_seed": 70682,
+      "seconds": 30
+    },
+    {
+      "transactions": 31082,
+      "failures": 0,
+      "p50_ms": 8.217,
+      "p95_ms": 61.062,
+      "tps_excluding_initial_connections": 1035.503249,
+      "log_files": [
+        "4-raw.621",
+        "4-raw.621.1",
+        "4-raw.621.2",
+        "4-raw.621.3"
+      ],
+      "number": 4,
+      "variant": "raw",
+      "random_seed": 70682,
+      "seconds": 30
+    }
+  ],
+  "context": {
+    "host_platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "host_logical_cpus": 4,
+    "github": {
+      "GITHUB_SHA": "ee29e2b8cb9044321b4d9a2c5e3fb6584ed0ea2d",
+      "GITHUB_RUN_ID": "37852951875",
+      "GITHUB_RUN_ATTEMPT": "1",
+      "RUNNER_OS": "Linux",
+      "RUNNER_ARCH": "X64"
+    },
+    "image": [
+      "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24"
+    ],
+    "image_id": "sha256:79bd7c99e923138f136f8009d6bffa66e21e9d4fda5c0c561b00fc9c90cfe537",
+    "container": "Linux cc29ea22fb6a 6.17.0-1022-azure #22-Ubuntu SMP Mon Jul 27 17:24:03 UTC 2026 x86_64 Linux\nprocessor\t: 0\nvendor_id\t: AuthenticAMD\ncpu family\t: 25\nmodel\t\t: 1\nmodel name\t: AMD EPYC 7763 64-Core Processor\nstepping\t: 1\nmicrocode\t: 0xffffffff\ncpu MHz\t\t: 3245.887\ncache size\t: 512 KB\nphysical id\t: 0\nsiblings\t: 4\ncore id\t\t: 0\ncpu cores\t: 2\napicid\t\t: 0\ninitial apicid\t: 0\nfpu\t\t: yes\nfpu_exception\t: yes\ncpuid level\t: 13\nwp\t\t: yes\nflags\t\t: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid aperfmperf tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy svm cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw topoext vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves user_shstk clzero xsaveerptr rdpru arat npt nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold v_vmsave_vmload umip vaes vpclmulqdq rdpid fsrm\nbugs\t\t: sysret_ss_attrs null_seg spectre_v1 spectre_v2 spec_store_bypass srso spectre_v2_user tsa\nbogomips\t: 4890.86\nTLB size\t: 2560 4K pages\nclflush size\t: 64\ncache_alignment\t: 64\naddress sizes\t: 48 bits physical, 48 bits virtual\npower management:\n\nprocessor\t: 1\nvendor_id\t: AuthenticAMD\ncpu family\t: 25\nmodel\t\t: 1\nmodel name\t: AMD EPYC 7763 64-Core Processor\nstepping\t: 1\nmicrocode\t: 0xffffffff\ncpu MHz\t\t: 3244.255\ncache size\t: 512 KB\nphysical id\t: 0\nsiblings\t: 4\ncore id\t\t: 0\ncpu cores\t: 2\napicid\t\t: 1\ninitial apicid\t: 1\nfpu\t\t: yes\nfpu_exception\t: yes\ncpuid level\t: 13\nwp\t\t: yes\nflags\t\t: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid aperfmperf tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy svm cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw topoext vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves user_shstk clzero xsaveerptr rdpru arat npt nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold v_vmsave_vmload umip vaes vpclmulqdq rdpid fsrm\nbugs\t\t: sysret_ss_attrs null_seg spectre_v1 spectre_v2 spec_store_bypass srso spectre_v2_user tsa\nbogomips\t: 4890.86\nTLB size\t: 2560 4K pages\nclflush size\t: 64\ncache_alignment\t: 64\naddress sizes\t: 48 bits physical, 48 bits virtual\npower management:\n\nprocessor\t: 2\nvendor_id\t: AuthenticAMD\ncpu family\t: 25\nmodel\t\t: 1\nmodel name\t: AMD EPYC 7763 64-Core Processor\nstepping\t: 1\nmicrocode\t: 0xffffffff\ncpu MHz\t\t: 3241.560\ncache size\t: 512 KB\nphysical id\t: 0\nsiblings\t: 4\ncore id\t\t: 1\ncpu cores\t: 2\napicid\t\t: 2\ninitial apicid\t: 2\nfpu\t\t: yes\nfpu_exception\t: yes\ncpuid level\t: 13\nwp\t\t: yes\nflags\t\t: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid aperfmperf tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy svm cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw topoext vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves user_shstk clzero xsaveerptr rdpru arat npt nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold v_vmsave_vmload umip vaes vpclmulqdq rdpid fsrm\nbugs\t\t: sysret_ss_attrs null_seg spectre_v1 spectre_v2 spec_store_bypass srso spectre_v2_user tsa\nbogomips\t: 4890.86\nTLB size\t: 2560 4K pages\nclflush size\t: 64\ncache_alignment\t: 64\naddress sizes\t: 48 bits physical, 48 bits virtual\npower management:\n\nprocessor\t: 3\nvendor_id\t: AuthenticAMD\ncpu family\t: 25\nmodel\t\t: 1\nmodel name\t: AMD EPYC 7763 64-Core Processor\nstepping\t: 1\nmicrocode\t: 0xffffffff\ncpu MHz\t\t: 3240.144\ncache size\t: 512 KB\nphysical id\t: 0\nsiblings\t: 4\ncore id\t\t: 1\ncpu cores\t: 2\napicid\t\t: 3\ninitial apicid\t: 3\nfpu\t\t: yes\nfpu_exception\t: yes\ncpuid level\t: 13\nwp\t\t: yes\nflags\t\t: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid aperfmperf tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy svm cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw topoext vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves user_shstk clzero xsaveerptr rdpru arat npt nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold v_vmsave_vmload umip vaes vpclmulqdq rdpid fsrm\nbugs\t\t: sysret_ss_attrs null_seg spectre_v1 spectre_v2 spec_store_bypass srso spectre_v2_user tsa\nbogomips\t: 4890.86\nTLB size\t: 2560 4K pages\nclflush size\t: 64\ncache_alignment\t: 64\naddress sizes\t: 48 bits physical, 48 bits virtual\npower management:\n\nMemTotal:       16373452 kB\nMemFree:        12628780 kB\nMemAvailable:   15240656 kB\nBuffers:           92564 kB\nCached:          2784376 kB\nSwapCached:            0 kB\nActive:           782084 kB\nInactive:        2391972 kB\nActive(anon):     366552 kB\nInactive(anon):        0 kB\nActive(file):     415532 kB\nInactive(file):  2391972 kB\nUnevictable:       46760 kB\nMlocked:           43688 kB\nSwapTotal:       3145724 kB\nSwapFree:        3145724 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:              4056 kB\nWriteback:             0 kB\nAnonPages:        333120 kB\nMapped:           386500 kB\nShmem:             60700 kB\nKReclaimable:     131464 kB\nSlab:             213564 kB\nSReclaimable:     131464 kB\nSUnreclaim:        82100 kB\nKernelStack:        4828 kB\nPageTables:         7996 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    11332448 kB\nCommitted_AS:    2453016 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:       42304 kB\nVmallocChunk:          0 kB\nPercpu:             2208 kB\nHardwareCorrupted:     0 kB\nAnonHugePages:    112640 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nCmaTotal:              0 kB\nCmaFree:               0 kB\nUnaccepted:            0 kB\nBalloon:               0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:      169088 kB\nDirectMap2M:     6117376 kB\nDirectMap1G:    12582912 kB",
+    "postgresql": "PostgreSQL 17.11 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit\nTimeZone=UTC\neffective_cache_size=524288\njit=on\nmax_connections=100\nmax_parallel_workers_per_gather=2\nshared_buffers=16384\nwork_mem=4096",
+    "pgbench": "pgbench (PostgreSQL) 17.11",
+    "client_and_db_share_container": true
+  },
+  "migrations": [
+    {
+      "file": "V1__booking.sql",
+      "sha256": "6261c6b0eaab83e8f97c9bf586a547c6867fb3fbd16ee7f42a34d3799580cab2"
+    },
+    {
+      "file": "V2__demo_resources.sql",
+      "sha256": "e8bc68a41c23a40625d3c512b9bc998ba3e5c486b56f0cffbdbb89369c97344f"
+    },
+    {
+      "file": "V3__resource_usage.sql",
+      "sha256": "060daebfbe8274378c191e88e5e54a6bdb7d7d8378457867629df2509ec82c27"
+    }
+  ],
+  "seed_seconds": 75.972592258,
+  "dataset": {
+    "resources": 100,
+    "bookings": 1000000,
+    "active": 900000,
+    "cancelled": 100000,
+    "crosses_utc_midnight": 166700,
+    "active_crosses_utc_midnight": 133300,
+    "from_utc": "2020-01-01T23:00:00+00:00",
+    "to_utc": "2024-07-25T14:00:00+00:00",
+    "max_day_offset": 1637,
+    "active_booked_seconds": 9720000000.0,
+    "generator": "100 resources x 10000 three-hour intervals, four-hour stride from 2020-01-01 23:00 UTC; every tenth interval cancelled",
+    "demo_resources": "V2 applied, its two resources deleted before deterministic seed",
+    "view_totals": {
+      "rows": 166700,
+      "booking_count": 1033300,
+      "booked_seconds": 9720000000.0
+    }
+  },
+  "refresh": {
+    "initial_seconds": 2.728861794000011,
+    "unchanged_seconds": 3.0287635050000006
+  },
+  "queries": {
+    "raw": "34daf44e68cb00742a0aca150e51555c1c56d0da0e8ff68738fe85c6fe39f728",
+    "view": "5e27f2d7ca8a5db1ce114ff9e9f16fc21b6fe0ac77000958d84a19d4a13d537a"
+  },
+  "equivalence_checks": [
+    {
+      "resource_number": 1,
+      "day_offset": -31,
+      "differences": 0
+    },
+    {
+      "resource_number": 1,
+      "day_offset": 0,
+      "differences": 0
+    },
+    {
+      "resource_number": 1,
+      "day_offset": 17,
+      "differences": 0
+    },
+    {
+      "resource_number": 1,
+      "day_offset": 365,
+      "differences": 0
+    },
+    {
+      "resource_number": 1,
+      "day_offset": 1000,
+      "differences": 0
+    },
+    {
+      "resource_number": 1,
+      "day_offset": 1637,
+      "differences": 0
+    },
+    {
+      "resource_number": 1,
+      "day_offset": 1667,
+      "differences": 0
+    },
+    {
+      "resource_number": 1,
+      "day_offset": 1699,
+      "differences": 0
+    },
+    {
+      "resource_number": 17,
+      "day_offset": -31,
+      "differences": 0
+    },
+    {
+      "resource_number": 17,
+      "day_offset": 0,
+      "differences": 0
+    },
+    {
+      "resource_number": 17,
+      "day_offset": 17,
+      "differences": 0
+    },
+    {
+      "resource_number": 17,
+      "day_offset": 365,
+      "differences": 0
+    },
+    {
+      "resource_number": 17,
+      "day_offset": 1000,
+      "differences": 0
+    },
+    {
+      "resource_number": 17,
+      "day_offset": 1637,
+      "differences": 0
+    },
+    {
+      "resource_number": 17,
+      "day_offset": 1667,
+      "differences": 0
+    },
+    {
+      "resource_number": 17,
+      "day_offset": 1699,
+      "differences": 0
+    },
+    {
+      "resource_number": 50,
+      "day_offset": -31,
+      "differences": 0
+    },
+    {
+      "resource_number": 50,
+      "day_offset": 0,
+      "differences": 0
+    },
+    {
+      "resource_number": 50,
+      "day_offset": 17,
+      "differences": 0
+    },
+    {
+      "resource_number": 50,
+      "day_offset": 365,
+      "differences": 0
+    },
+    {
+      "resource_number": 50,
+      "day_offset": 1000,
+      "differences": 0
+    },
+    {
+      "resource_number": 50,
+      "day_offset": 1637,
+      "differences": 0
+    },
+    {
+      "resource_number": 50,
+      "day_offset": 1667,
+      "differences": 0
+    },
+    {
+      "resource_number": 50,
+      "day_offset": 1699,
+      "differences": 0
+    },
+    {
+      "resource_number": 100,
+      "day_offset": -31,
+      "differences": 0
+    },
+    {
+      "resource_number": 100,
+      "day_offset": 0,
+      "differences": 0
+    },
+    {
+      "resource_number": 100,
+      "day_offset": 17,
+      "differences": 0
+    },
+    {
+      "resource_number": 100,
+      "day_offset": 365,
+      "differences": 0
+    },
+    {
+      "resource_number": 100,
+      "day_offset": 1000,
+      "differences": 0
+    },
+    {
+      "resource_number": 100,
+      "day_offset": 1637,
+      "differences": 0
+    },
+    {
+      "resource_number": 100,
+      "day_offset": 1667,
+      "differences": 0
+    },
+    {
+      "resource_number": 100,
+      "day_offset": 1699,
+      "differences": 0
+    }
+  ],
+  "summary": {
+    "raw": {
+      "transactions": 61795,
+      "p50_ms": 8.267,
+      "p95_ms": 61.143,
+      "tps_excluding_initial_connections": 1029.4299518523776
+    },
+    "view": {
+      "transactions": 179791,
+      "p50_ms": 2.422,
+      "p95_ms": 49.762,
+      "tps_excluding_initial_connections": 2996.970758145084
+    }
+  },
+  "comparison": {
+    "p95_raw_over_view": 1.2287086531891804,
+    "p95_reduction_percent": 18.613741556678605
+  },
+  "finished_at_utc": "2026-10-08T22:25:55Z",
+  "container_removed": true
+}

@@ -3,3 +3,5 @@
 *.iml
 .DS_Store
 .env
+/benchmark-results/
+__pycache__/
