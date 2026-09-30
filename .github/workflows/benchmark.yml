@@ -1,0 +1,45 @@
+name: SQL benchmark
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  resource-usage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      BENCHMARK_CONTAINER: booking-benchmark-${{ github.run_id }}-${{ github.run_attempt }}
+      BENCHMARK_RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check latency log parser
+        run: python -B scripts/benchmark_test.py
+      - name: Compare indexed raw SQL with materialized view
+        run: >-
+          python scripts/benchmark.py
+          --container-name "$BENCHMARK_CONTAINER"
+          --run-id "$BENCHMARK_RUN_ID"
+          --output benchmark-results
+          --clients 16 --threads 4 --seconds 30 --warmup-seconds 8
+      - name: Preserve measurements and plans
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: resource-usage-sql-${{ github.run_id }}-${{ github.run_attempt }}
+          path: benchmark-results/
+          if-no-files-found: error
+          retention-days: 90
+      - name: Remove owned benchmark database
+        if: always()
+        shell: bash
+        run: |
+          owner=$(docker inspect "$BENCHMARK_CONTAINER" --format '{{index .Config.Labels "dev.nikita.booking.benchmark"}}' 2>/dev/null || true)
+          if [ "$owner" = "$BENCHMARK_RUN_ID" ]; then
+            docker rm -f -v "$BENCHMARK_CONTAINER"
+          fi
