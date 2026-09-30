@@ -21,6 +21,7 @@ jobs:
       - name: Check latency log parser
         run: python -B scripts/benchmark_test.py
       - name: Compare indexed raw SQL with materialized view
+        timeout-minutes: 25
         run: >-
           python scripts/benchmark.py
           --container-name "$BENCHMARK_CONTAINER"

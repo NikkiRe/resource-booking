@@ -110,6 +110,7 @@ def markdown(report):
             lines += [f"{variant}: pooled p50 {metrics['p50_ms']:.3f} ms, "
                       f"pooled p95 {metrics['p95_ms']:.3f} ms, "
                       f"throughput {metrics['tps_excluding_initial_connections']:.1f} transactions/s."]
+    if 'comparison' in report:
         lines += ['', f"Raw/view pooled p95 ratio: {report['comparison']['p95_raw_over_view']:.3f}x. "
                   f"View p95 change: {report['comparison']['p95_reduction_percent']:.2f}%.", '']
     if {'initial_seconds', 'unchanged_seconds'} <= report.get('refresh', {}).keys():
@@ -198,6 +199,8 @@ def main():
                 if time.monotonic() >= deadline:
                     raise RuntimeError('PostgreSQL was not ready within 90 seconds')
                 time.sleep(0.5)
+        if int(psql("SELECT current_setting('server_version_num');")) // 10_000 != 17:
+            raise RuntimeError('This benchmark requires PostgreSQL 17')
         report['context'] = {
             'host_platform': platform.platform(), 'host_logical_cpus': os.cpu_count(),
             'github': {key: os.environ[key] for key in
@@ -332,6 +335,9 @@ SELECT json_build_object(
                 logs = subprocess.run(['docker', 'logs', args.container_name],
                                       text=True, capture_output=True, timeout=15)
                 (output / 'postgres.log').write_text(logs.stdout + logs.stderr)
+            except BaseException as log_error:
+                report['postgres_log_error'] = str(log_error)
+            try:
                 owner = command(['docker', 'inspect', args.container_name, '--format',
                                  f'{{{{index .Config.Labels "{LABEL}"}}}}']).strip()
                 if owner != args.run_id:
