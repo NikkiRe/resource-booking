@@ -4,6 +4,12 @@ server:
 grpc:
   port: ${GRPC_PORT:9090}
 
+analytics:
+  refresh:
+    enabled: ${ANALYTICS_REFRESH_ENABLED:true}
+    delay: ${ANALYTICS_REFRESH_DELAY:PT1M}
+    initial-delay: ${ANALYTICS_REFRESH_INITIAL_DELAY:PT1S}
+
 spring:
   application:
     name: resource-booking

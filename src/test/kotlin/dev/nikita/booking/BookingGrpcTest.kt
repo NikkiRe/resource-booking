@@ -51,7 +51,7 @@ import java.util.concurrent.TimeUnit
 import javax.sql.DataSource
 
 @Testcontainers
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = ["grpc.port=0"])
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = ["grpc.port=0", "analytics.refresh.enabled=false"])
 @Import(BookingApiTest.TestClock::class)
 class BookingGrpcTest {
     @Autowired lateinit var server: GrpcServer

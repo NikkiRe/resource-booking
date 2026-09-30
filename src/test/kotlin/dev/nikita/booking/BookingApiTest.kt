@@ -33,7 +33,7 @@ import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 @Testcontainers
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = ["grpc.port=0"])
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = ["grpc.port=0", "analytics.refresh.enabled=false"])
 @Import(BookingApiTest.TestClock::class)
 class BookingApiTest {
     @Autowired lateinit var http: TestRestTemplate
